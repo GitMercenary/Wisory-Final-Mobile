@@ -17,37 +17,37 @@ const services = [
     icon: Building2,
     title: 'GCC Setup & Strategy',
     description: 'End-to-end capability center establishment from site selection to operational launch, tailored to your enterprise needs.',
-    image: '/service-1.png',
+    image: '/img6.jpg',
   },
   {
     icon: Users,
     title: 'Talent Acquisition & Management',
     description: 'Access India\'s best tech talent with our proven recruitment processes and retention strategies.',
-    image: '/service-2.png',
+    image: '/img9.jpeg',
   },
   {
     icon: TrendingUp,
     title: 'Operations Excellence',
     description: 'Optimize your center\'s performance with world-class operational frameworks and continuous improvement.',
-    image: '/service-3.png',
+    image: '/img10.jpg',
   },
   {
     icon: Cpu,
     title: 'Technology Integration',
     description: 'Seamlessly integrate cutting-edge technologies and platforms to enhance productivity and innovation.',
-    image: '/service-4.png',
+    image: '/img11.png',
   },
   {
     icon: Shield,
     title: 'Compliance & Governance',
     description: 'Navigate complex regulatory landscapes with comprehensive compliance and risk management solutions.',
-    image: '/service-5.png',
+    image: '/img1.jpg',
   },
   {
     icon: Rocket,
     title: 'Scaling & Optimization',
     description: 'Scale your operations efficiently while maintaining quality and driving continuous performance improvements.',
-    image: '/service-6.png',
+    image: '/img2.jpg',
   },
 ];
 
@@ -116,6 +116,7 @@ export const Services: React.FC = () => {
 
     return () => {
       ctx.revert();
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
@@ -146,7 +147,7 @@ export const Services: React.FC = () => {
 
           {/* Left: Sticky Card - Overlaid on top */}
           <div className="absolute top-0 left-0 h-screen w-full flex items-center justify-start pl-20 pointer-events-none">
-            <div ref={cardRef} className="w-full max-w-[450px] pointer-events-auto">
+            <div ref={cardRef} className="w-full max-w-[380px] pointer-events-auto">
               <motion.div
                 className="rounded-3xl p-10 shadow-2xl"
                 style={{ backgroundColor: '#f02d31' }}
@@ -186,14 +187,9 @@ export const Services: React.FC = () => {
                 </div>
 
                 {/* Current Service Title */}
-                <h3 className="text-4xl font-heading font-bold mb-6 leading-tight transition-all duration-500" style={{ color: '#ffffff' }}>
+                <h3 className="text-4xl font-heading font-bold leading-tight transition-all duration-500" style={{ color: '#ffffff' }}>
                   {services[activeIndex].title}
                 </h3>
-
-                {/* Current Service Description */}
-                <p className="text-lg leading-relaxed transition-all duration-500" style={{ color: '#ffffff', opacity: 0.9 }}>
-                  {services[activeIndex].description}
-                </p>
               </motion.div>
             </div>
           </div>
@@ -256,12 +252,8 @@ export const Services: React.FC = () => {
                       <h3 className="text-2xl md:text-3xl font-heading font-bold text-primary mb-3">
                         {service.title}
                       </h3>
-                      <p className="text-gray-700 leading-relaxed text-base md:text-lg mb-4">
-                        {service.description}
-                      </p>
-
                       {/* Learn More Link */}
-                      <button className="flex items-center text-primary font-semibold text-base md:text-lg group">
+                      <button className="flex items-center text-primary font-semibold text-base md:text-lg group mt-4">
                         <span className="mr-2">Learn More</span>
                         <motion.div
                           initial={{ x: 0 }}

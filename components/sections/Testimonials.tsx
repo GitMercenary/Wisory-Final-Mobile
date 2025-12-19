@@ -38,7 +38,7 @@ export const Testimonials: React.FC = () => {
   };
 
   return (
-    <section className="section-padding bg-charcoal relative overflow-hidden">
+    <section className="section-padding bg-gray-100 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 grid-pattern opacity-5" />
 
@@ -54,7 +54,7 @@ export const Testimonials: React.FC = () => {
             >
               Client Testimonials
             </motion.p>
-            <h2 className="text-4xl md:text-5xl lg:text-h2 font-heading font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-h2 font-heading font-bold text-gray-900 mb-6">
               What Our Clients Say
             </h2>
           </div>
@@ -83,19 +83,19 @@ export const Testimonials: React.FC = () => {
                 </motion.div>
 
                 {/* Quote Text */}
-                <blockquote className="text-2xl md:text-3xl text-white font-light leading-relaxed mb-8 italic">
+                <blockquote className="text-2xl md:text-3xl text-gray-800 font-light leading-relaxed mb-8 italic">
                   &ldquo;{testimonials[currentIndex].quote}&rdquo;
                 </blockquote>
 
                 {/* Author Info */}
                 <div>
-                  <p className="text-xl font-heading font-semibold text-white mb-1">
+                  <p className="text-xl font-heading font-semibold text-gray-900 mb-1">
                     {testimonials[currentIndex].author}
                   </p>
                   <p className="text-primary mb-1">
                     {testimonials[currentIndex].position}
                   </p>
-                  <p className="text-gray-400">
+                  <p className="text-gray-600">
                     {testimonials[currentIndex].company}
                   </p>
                 </div>

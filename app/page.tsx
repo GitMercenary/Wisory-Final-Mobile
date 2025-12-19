@@ -29,7 +29,7 @@ export default function Home() {
       {/* <Recognition /> */}
       {/* <MediaMentions /> */}
       <Values />
-      <CaseStudies />
+      {/* <CaseStudies /> */}
       <Process />
       <Testimonials />
       <Blog />

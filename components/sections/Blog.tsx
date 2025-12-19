@@ -15,21 +15,21 @@ interface BlogPost {
 const blogPosts: BlogPost[] = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
+    image: '/img2.jpg',
     category: 'Industry',
     title: 'Emerging Enterprise GCCs in India – Landscape Report 2025',
     link: '#',
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop',
+    image: '/img4.jpg',
     category: 'Insights',
     title: 'The AI Advantage Survey 2025: How India\'s Workforce is Already Redefining the Future of Work Through AI',
     link: '#',
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop',
+    image: '/img8.jpg',
     category: 'Leadership',
     title: 'Aspire. Lead. Transform: The Playbook for Successful GCC Leadership',
     link: '#',

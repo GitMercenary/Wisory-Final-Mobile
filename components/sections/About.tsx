@@ -16,7 +16,7 @@ const reasons = [
     title: 'Deep Market Expertise',
     highlight: 'Expertise',
     description: 'With deep expertise in the Indian market and global best practices, we stand at the intersection of strategic vision and operational excellence.',
-    image: '/why-wisory-bg.png',
+    image: '/img1.jpg',
     stats: [
       { value: 50, suffix: '+', label: 'Capability Centers Built' },
       { value: 200, suffix: '+', label: 'Enterprise Clients' },
@@ -26,7 +26,7 @@ const reasons = [
     title: 'Proven Track Record',
     highlight: 'Track Record',
     description: 'We don\'t just build capability centers—we create innovation engines that drive sustained competitive advantage for global enterprises.',
-    image: '/why-wisory-bg.png',
+    image: '/img3.jpg',
     stats: [
       { value: 5000, suffix: '+', label: 'Professionals Placed' },
       { value: 98, suffix: '%', label: 'Client Retention Rate' },
@@ -36,7 +36,7 @@ const reasons = [
     title: 'End-to-End Support',
     highlight: 'Support',
     description: 'Our proven methodology combines local market knowledge with international standards to deliver centers that exceed expectations.',
-    image: '/why-wisory-bg.png',
+    image: '/img5.png',
     stats: [
       { value: 50, suffix: '+', label: 'Capability Centers Built' },
       { value: 200, suffix: '+', label: 'Enterprise Clients' },
@@ -46,7 +46,7 @@ const reasons = [
     title: 'Measurable Outcomes',
     highlight: 'Outcomes',
     description: 'From Fortune 500 companies to emerging tech leaders, our clients trust us to transform their India strategy into measurable business outcomes.',
-    image: '/why-wisory-bg.png',
+    image: '/img7.png',
     stats: [
       { value: 5000, suffix: '+', label: 'Professionals Placed' },
       { value: 98, suffix: '%', label: 'Client Retention Rate' },
@@ -160,6 +160,7 @@ export const About: React.FC = () => {
 
     return () => {
       ctx.revert();
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
@@ -188,8 +189,8 @@ export const About: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Stacking Cards Section - Desktop - Dark Background */}
-      <div ref={containerRef} className="hidden lg:block relative bg-[#2a2a2a]" style={{ height: `300vh` }}>
+      {/* Stacking Cards Section - Desktop - Light Background */}
+      <div ref={containerRef} className="hidden lg:block relative bg-gray-100" style={{ height: `300vh` }}>
         <div className="sticky-cards-container sticky top-0 h-screen flex items-center justify-center overflow-hidden">
           {reasons.map((reason, index) => (
             <div
