@@ -49,11 +49,11 @@ export const Values: React.FC = () => {
     const ctx = gsap.context(() => {
       // Background zoom effect on scroll
       gsap.to(backgroundRef.current, {
-        scale: 1.2,
+        scale: 1.15,
         scrollTrigger: {
           trigger: containerRef.current,
-          start: 'top top',
-          end: 'bottom bottom',
+          start: 'top bottom',
+          end: 'bottom top',
           scrub: 1,
         },
       });
@@ -78,12 +78,11 @@ export const Values: React.FC = () => {
 
     return () => {
       ctx.revert();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
   return (
-    <section id="values" className="relative overflow-hidden" ref={containerRef}>
+    <section id="values" className="relative overflow-hidden min-h-screen" ref={containerRef}>
       {/* Fixed Background with Zoom Effect */}
       <div
         ref={backgroundRef}
@@ -98,7 +97,7 @@ export const Values: React.FC = () => {
       <div className="absolute inset-0 bg-black/40" />
 
       {/* Content */}
-      <div className="relative z-10 min-h-[400vh] py-20 lg:py-32">
+      <div className="relative z-10 py-20 lg:py-32">
         {/* Section Header */}
         <div className="container-custom mb-20">
           <motion.div
@@ -126,7 +125,7 @@ export const Values: React.FC = () => {
         </div>
 
         {/* Values Cards - Appearing on scroll */}
-        <div className="container-custom space-y-32 lg:space-y-40">
+        <div className="container-custom space-y-16 lg:space-y-24">
           {values.map((value, index) => (
             <div
               key={value.title}

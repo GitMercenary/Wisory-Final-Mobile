@@ -1,20 +1,58 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Award, Target, Users2, TrendingUp } from 'lucide-react';
-import { ScrollReveal } from '../common/ScrollReveal';
-import { fadeInUp, slideInLeft, slideInRight } from '@/lib/animations';
+import { motion } from 'framer-motion';
+import { Building2, Users2, Target, TrendingUp } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const stats = [
-  { icon: Building2, value: 50, suffix: '+', label: 'Capability Centers Built' },
-  { icon: Users2, value: 200, suffix: '+', label: 'Enterprise Clients' },
-  { icon: Target, value: 5000, suffix: '+', label: 'Professionals Placed' },
-  { icon: TrendingUp, value: 98, suffix: '%', label: 'Client Retention Rate' },
+// Register GSAP plugin
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+const reasons = [
+  {
+    title: 'Deep Market Expertise',
+    highlight: 'Expertise',
+    description: 'With deep expertise in the Indian market and global best practices, we stand at the intersection of strategic vision and operational excellence.',
+    image: '/why-wisory-bg.png',
+    stats: [
+      { value: 50, suffix: '+', label: 'Capability Centers Built' },
+      { value: 200, suffix: '+', label: 'Enterprise Clients' },
+    ],
+  },
+  {
+    title: 'Proven Track Record',
+    highlight: 'Track Record',
+    description: 'We don\'t just build capability centers—we create innovation engines that drive sustained competitive advantage for global enterprises.',
+    image: '/why-wisory-bg.png',
+    stats: [
+      { value: 5000, suffix: '+', label: 'Professionals Placed' },
+      { value: 98, suffix: '%', label: 'Client Retention Rate' },
+    ],
+  },
+  {
+    title: 'End-to-End Support',
+    highlight: 'Support',
+    description: 'Our proven methodology combines local market knowledge with international standards to deliver centers that exceed expectations.',
+    image: '/why-wisory-bg.png',
+    stats: [
+      { value: 50, suffix: '+', label: 'Capability Centers Built' },
+      { value: 200, suffix: '+', label: 'Enterprise Clients' },
+    ],
+  },
+  {
+    title: 'Measurable Outcomes',
+    highlight: 'Outcomes',
+    description: 'From Fortune 500 companies to emerging tech leaders, our clients trust us to transform their India strategy into measurable business outcomes.',
+    image: '/why-wisory-bg.png',
+    stats: [
+      { value: 5000, suffix: '+', label: 'Professionals Placed' },
+      { value: 98, suffix: '%', label: 'Client Retention Rate' },
+    ],
+  },
 ];
-
-// Import Building2 from lucide-react
-import { Building2 } from 'lucide-react';
 
 interface CounterProps {
   end: number;
@@ -24,29 +62,43 @@ interface CounterProps {
 
 const Counter: React.FC<CounterProps> = ({ end, suffix = '', duration = 2000 }) => {
   const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
-    if (!isInView) return;
+    if (hasAnimated) return;
 
-    let startTime: number | null = null;
-    const startValue = 0;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setHasAnimated(true);
+          let startTime: number | null = null;
+          const startValue = 0;
 
-    const animate = (currentTime: number) => {
-      if (startTime === null) startTime = currentTime;
-      const progress = (currentTime - startTime) / duration;
+          const animate = (currentTime: number) => {
+            if (startTime === null) startTime = currentTime;
+            const progress = (currentTime - startTime) / duration;
 
-      if (progress < 1) {
-        setCount(Math.floor(startValue + (end - startValue) * progress));
-        requestAnimationFrame(animate);
-      } else {
-        setCount(end);
-      }
-    };
+            if (progress < 1) {
+              setCount(Math.floor(startValue + (end - startValue) * progress));
+              requestAnimationFrame(animate);
+            } else {
+              setCount(end);
+            }
+          };
 
-    requestAnimationFrame(animate);
-  }, [isInView, end, duration]);
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAnimated, end, duration]);
 
   return (
     <span ref={ref}>
@@ -57,117 +109,206 @@ const Counter: React.FC<CounterProps> = ({ end, suffix = '', duration = 2000 }) 
 };
 
 export const About: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement[]>([]);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Desktop stacking scroll animation
+      if (window.innerWidth >= 1024) {
+        const cards = cardsRef.current.filter(Boolean);
+
+        // Pin the container while cards are revealing
+        ScrollTrigger.create({
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom bottom',
+          pin: '.sticky-cards-container',
+          pinSpacing: false,
+        });
+
+        // Set initial z-index for proper stacking
+        cards.forEach((card, index) => {
+          gsap.set(card, {
+            zIndex: 10 + index,
+            y: '100%',
+            scale: 0.95,
+            opacity: 0
+          });
+        });
+
+        // Animate each card entrance - cards stay in center
+        cards.forEach((card, index) => {
+          gsap.to(card, {
+            y: '0%', // All cards come to center and stay there
+            scale: 1,
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: `top+=${index * 20}% top`,
+              end: `top+=${index * 20 + 15}% top`,
+              scrub: 1,
+            },
+          });
+        });
+      }
+    }, containerRef);
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
+
   return (
-    <section id="about" className="section-padding bg-white relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute top-0 right-0 w-1/2 h-full opacity-5">
-        <div className="grid-pattern w-full h-full" />
+    <section id="about" ref={sectionRef} className="relative overflow-hidden">
+      {/* Header Section - Light Background */}
+      <div className="bg-[#F5F1E8] container-custom py-20">
+        <motion.div
+          className="text-center max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.p
+            className="text-primary font-medium text-sm md:text-base tracking-wider uppercase mb-4"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            Why Wisory Global
+          </motion.p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-black mb-6">
+            Your Trusted Partner for India Capability Centers
+          </h2>
+        </motion.div>
       </div>
 
-      <div className="container-custom relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Left Content */}
-          <ScrollReveal variant="slideInLeft">
-            <div>
-              <motion.p
-                className="text-primary font-medium text-sm md:text-base tracking-wider uppercase mb-4"
-                variants={fadeInUp}
-              >
-                Why Wisory Global
-              </motion.p>
-              <h2 className="text-4xl md:text-5xl lg:text-h2 font-heading font-bold text-black mb-6">
-                Your Trusted Partner for India Capability Centers
-              </h2>
-              <div className="space-y-4 text-grey text-lg leading-relaxed mb-8">
-                <p>
-                  With deep expertise in the Indian market and global best practices, Wisory Global
-                  stands at the intersection of strategic vision and operational excellence.
-                </p>
-                <p>
-                  We don&apos;t just build capability centers—we create innovation engines that drive
-                  sustained competitive advantage for global enterprises. Our proven methodology
-                  combines local market knowledge with international standards to deliver centers
-                  that exceed expectations.
-                </p>
-                <p>
-                  From Fortune 500 companies to emerging tech leaders, our clients trust us to
-                  transform their India strategy into measurable business outcomes.
-                </p>
-              </div>
+      {/* Stacking Cards Section - Desktop - Dark Background */}
+      <div ref={containerRef} className="hidden lg:block relative bg-[#2a2a2a]" style={{ height: `300vh` }}>
+        <div className="sticky-cards-container sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+          {reasons.map((reason, index) => (
+            <div
+              key={reason.title}
+              ref={(el) => {
+                if (el) cardsRef.current[index] = el;
+              }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[95vw] px-4"
+              style={{ zIndex: 10 + index }}
+            >
+                <div className="grid grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-2xl bg-white">
+                  {/* Left - Image */}
+                  <div className="relative h-[600px]">
+                    <img
+                      src={reason.image}
+                      alt={reason.title}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Darker overlay on image */}
+                    <div className="absolute inset-0 bg-black/40" />
+                  </div>
 
-              {/* Key Differentiators */}
-              <div className="space-y-4">
-                {[
-                  'Deep India market expertise with global perspective',
-                  'Proven track record across industries',
-                  'End-to-end support from strategy to operations',
-                  'Focus on measurable business outcomes',
-                ].map((item, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex items-start"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0" />
-                    <p className="text-grey">{item}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
+                  {/* Right - Content */}
+                  <div className="p-12 flex flex-col justify-center" style={{ backgroundColor: '#f02d31' }}>
+                    <div className="mb-8">
+                      <span className="text-sm font-medium" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                        {String(index + 1).padStart(2, '0')} / {String(reasons.length).padStart(2, '0')}
+                      </span>
+                    </div>
 
-          {/* Right - Image */}
-          <ScrollReveal variant="slideInRight">
-            <div className="relative">
-              <motion.div
-                className="rounded-2xl overflow-hidden shadow-2xl"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <img
-                  src="/why-wisory-bg.png"
-                  alt="Why Wisory Global"
-                  className="w-full h-auto object-cover"
-                />
-              </motion.div>
-            </div>
-          </ScrollReveal>
-        </div>
+                    <h3 className="text-4xl font-heading font-bold mb-6 leading-tight" style={{ color: '#ffffff' }}>
+                      {reason.title.split(reason.highlight)[0]}
+                      <span className="text-[#C9A96E]">{reason.highlight}</span>
+                      {reason.title.split(reason.highlight)[1]}
+                    </h3>
 
-        {/* Stats Section */}
-        <div className="mt-20">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                className="bg-vapor rounded-lg p-6 text-center border border-grey/10 hover:border-primary/30 transition-colors duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-              >
-                <motion.div
-                  className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <stat.icon className="w-6 h-6 text-primary" />
-                </motion.div>
-                <div className="text-4xl font-heading font-bold text-black mb-2">
-                  <Counter end={stat.value} suffix={stat.suffix} />
+                    <p className="text-lg leading-relaxed mb-8" style={{ color: '#ffffff', opacity: 0.9 }}>
+                      {reason.description}
+                    </p>
+
+                    {/* Stats */}
+                    <div className="grid grid-cols-2 gap-6 mt-auto">
+                      {reason.stats.map((stat, statIndex) => (
+                        <div key={statIndex} className="text-center">
+                          <div className="text-3xl font-heading font-bold mb-1" style={{ color: '#ffffff' }}>
+                            <Counter end={stat.value} suffix={stat.suffix} />
+                          </div>
+                          <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>{stat.label}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <p className="text-sm text-grey font-medium">{stat.label}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
+        </div>
+
+      {/* Mobile/Tablet - Stacking Cards */}
+      <div className="lg:hidden pb-20">
+        <div className="space-y-8 px-4">
+          {reasons.map((reason, index) => (
+            <motion.div
+              key={reason.title}
+              className="bg-white rounded-2xl overflow-hidden shadow-xl"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+            >
+              {/* Image */}
+              <div className="h-64 overflow-hidden">
+                <img
+                  src={reason.image}
+                  alt={reason.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Content */}
+              <div className="p-8" style={{ backgroundColor: '#f02d31' }}>
+                <div className="mb-4">
+                  <span className="text-sm font-medium" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                    {String(index + 1).padStart(2, '0')} / {String(reasons.length).padStart(2, '0')}
+                  </span>
+                </div>
+
+                <h3 className="text-2xl md:text-3xl font-heading font-bold mb-4" style={{ color: '#ffffff' }}>
+                  {reason.title.split(reason.highlight)[0]}
+                  <span className="text-[#C9A96E]">{reason.highlight}</span>
+                  {reason.title.split(reason.highlight)[1]}
+                </h3>
+
+                <p className="leading-relaxed mb-6" style={{ color: '#ffffff', opacity: 0.9 }}>
+                  {reason.description}
+                </p>
+
+                {/* Stats */}
+                <div className="grid grid-cols-2 gap-4">
+                  {reason.stats.map((stat, statIndex) => (
+                    <div key={statIndex} className="text-center">
+                      <div className="text-2xl md:text-3xl font-heading font-bold mb-1" style={{ color: '#ffffff' }}>
+                        <Counter end={stat.value} suffix={stat.suffix} />
+                      </div>
+                      <p className="text-xs md:text-sm" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>{stat.label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
   );
 };
+
+/* ========== OLD ABOUT CODE - PRESERVED FOR REVERSION ==========
+
+[Previous code preserved here...]
+
+========== END OLD ABOUT CODE ========== */

@@ -116,7 +116,6 @@ export const Services: React.FC = () => {
 
     return () => {
       ctx.revert();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
@@ -146,17 +145,19 @@ export const Services: React.FC = () => {
           </div>
 
           {/* Left: Sticky Card - Overlaid on top */}
-          <div className="relative h-screen flex items-center justify-start pl-20">
-            <div ref={cardRef} className="w-full max-w-[500px]">
+          <div className="absolute top-0 left-0 h-screen w-full flex items-center justify-start pl-20 pointer-events-none">
+            <div ref={cardRef} className="w-full max-w-[450px] pointer-events-auto">
               <motion.div
-                className="bg-blue-900 rounded-3xl p-14 shadow-2xl"
+                className="rounded-3xl p-10 shadow-2xl"
+                style={{ backgroundColor: '#f02d31' }}
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
                 {/* Section Label */}
                 <motion.p
-                  className="text-primary font-medium text-sm tracking-wider uppercase mb-6"
+                  className="font-medium text-sm tracking-wider uppercase mb-6"
+                  style={{ color: '#ffffff' }}
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
@@ -165,32 +166,32 @@ export const Services: React.FC = () => {
                 </motion.p>
 
                 {/* Main Heading */}
-                <h2 className="text-4xl font-heading font-bold text-white mb-6 leading-tight">
+                <h2 className="text-4xl font-heading font-bold mb-6 leading-tight" style={{ color: '#ffffff' }}>
                   Comprehensive Capability Center Services
                 </h2>
 
                 {/* Intro Text */}
-                <p className="text-white/70 text-base mb-10 leading-relaxed">
+                <p className="text-base mb-10 leading-relaxed" style={{ color: '#ffffff', opacity: 0.9 }}>
                   From strategic planning to operational excellence, we deliver integrated solutions that transform your India capability center into a competitive advantage.
                 </p>
 
                 {/* Divider */}
-                <div className="border-t border-white/20 mb-8"></div>
+                <div className="border-t mb-8" style={{ borderColor: 'rgba(255, 255, 255, 0.3)' }}></div>
 
                 {/* Counter */}
                 <div className="flex items-center gap-2 mb-6">
-                  <span className="text-white/60 text-base">{activeIndex + 1}</span>
-                  <span className="text-white/60 text-base">—</span>
-                  <span className="text-white/60 text-base">{services.length}</span>
+                  <span className="text-base" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>{activeIndex + 1}</span>
+                  <span className="text-base" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>—</span>
+                  <span className="text-base" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>{services.length}</span>
                 </div>
 
                 {/* Current Service Title */}
-                <h3 className="text-4xl font-heading font-bold text-white mb-6 leading-tight transition-all duration-500">
+                <h3 className="text-4xl font-heading font-bold mb-6 leading-tight transition-all duration-500" style={{ color: '#ffffff' }}>
                   {services[activeIndex].title}
                 </h3>
 
                 {/* Current Service Description */}
-                <p className="text-white/80 text-lg leading-relaxed transition-all duration-500">
+                <p className="text-lg leading-relaxed transition-all duration-500" style={{ color: '#ffffff', opacity: 0.9 }}>
                   {services[activeIndex].description}
                 </p>
               </motion.div>
