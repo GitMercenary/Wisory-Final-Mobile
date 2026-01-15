@@ -8,6 +8,7 @@ import { Button } from '../ui/Button';
 import { MagneticButton } from '../common/MagneticButton';
 import { ParticleBackground } from '../3d/ParticleBackground';
 import { FloatingShapes } from '../3d/FloatingShapes';
+import { CityConnectionAnimation } from '../animations/CityConnectionAnimation';
 
 export const Hero: React.FC = () => {
   const { scrollY } = useScroll();
@@ -23,18 +24,21 @@ export const Hero: React.FC = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark-gradient">
-      {/* Background Image */}
+      {/* Background Image with gradient overlay for better blending */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: 'url(/hero-bg.png)',
         }}
       />
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      {/* Dark Overlay with gradient for smooth scroll transition */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/30" />
 
       {/* Grid Pattern */}
       <div className="absolute inset-0 grid-pattern opacity-20" />
+
+      {/* City Connection Vector Animation */}
+      <CityConnectionAnimation />
 
       {/* 3D Background Elements */}
       <Suspense fallback={null}>
@@ -49,7 +53,7 @@ export const Hero: React.FC = () => {
       >
         {/* Pre-headline */}
         <motion.p
-          className="inline-block bg-primary text-white font-medium text-sm md:text-base tracking-wider uppercase mb-6 px-4 py-2 rounded"
+          className="inline-block bg-primary text-white font-medium text-sm md:text-base tracking-wider uppercase mb-6 px-4 py-2 rounded-lg"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -127,8 +131,8 @@ export const Hero: React.FC = () => {
         </motion.button>
       </motion.div>
 
-      {/* Bottom Gradient Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-vapor to-transparent" />
+      {/* Bottom Gradient Fade for smooth scroll transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-white via-vapor/80 to-transparent pointer-events-none" />
     </section>
   );
 };

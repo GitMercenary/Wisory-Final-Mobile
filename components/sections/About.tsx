@@ -190,7 +190,7 @@ export const About: React.FC = () => {
       </div>
 
       {/* Stacking Cards Section - Desktop - Light Background */}
-      <div ref={containerRef} className="hidden lg:block relative bg-gray-100" style={{ height: `300vh` }}>
+      <div ref={containerRef} className="hidden lg:block relative" style={{ height: `300vh`, backgroundColor: '#F5F1E8' }}>
         <div className="sticky-cards-container sticky top-0 h-screen flex items-center justify-center overflow-hidden">
           {reasons.map((reason, index) => (
             <div
@@ -250,7 +250,7 @@ export const About: React.FC = () => {
         </div>
 
       {/* Mobile/Tablet - Stacking Cards */}
-      <div className="lg:hidden pb-20">
+      <div className="lg:hidden pb-20" style={{ backgroundColor: '#F5F1E8' }}>
         <div className="space-y-8 px-4">
           {reasons.map((reason, index) => (
             <motion.div

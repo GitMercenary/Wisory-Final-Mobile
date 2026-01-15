@@ -12,12 +12,16 @@ const config: Config = {
         primary: {
           DEFAULT: '#EF3A33',
           dark: '#D42F28',
+          soft: '#E87570', // Softer red for CTA sections
         },
         black: '#1A1A1A',
         charcoal: '#2D2D2D',
         vapor: '#F7FAFC',
         grey: '#666666',
-        gold: '#C9A96E',
+        gold: {
+          DEFAULT: '#E5C576', // Brighter, more vibrant gold
+          light: '#F0D999', // Light gold for gradients
+        },
       },
       fontFamily: {
         heading: ['Poppins', 'sans-serif'],
@@ -36,10 +40,27 @@ const config: Config = {
         'lg': '4rem',
         'xl': '8rem',
       },
+      /* Design System Border Radius */
       borderRadius: {
+        'main': '32px',        // Primary cards, containers
+        'button': '12px',      // All buttons
+        'card': '32px',        // Service/capability cards
+        'overlay': '32px',     // Image overlays
+        'cta': '32px',         // CTA containers
+        'input': '12px',       // Form inputs
+        'small': '8px',        // Small elements
+        // Keep legacy values for backwards compatibility
         'sm': '8px',
         'md': '16px',
         'lg': '24px',
+      },
+      /* Card System for Consistent Symmetry */
+      minHeight: {
+        'card': '280px',       // Ensures all cards have minimum height
+        'card-tall': '360px',  // For cards needing more vertical space
+      },
+      aspectRatio: {
+        'card': '1.5',         // 3:2 ratio for consistent card proportions
       },
       transitionDuration: {
         'fast': '200ms',

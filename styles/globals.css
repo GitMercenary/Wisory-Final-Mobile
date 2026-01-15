@@ -5,30 +5,46 @@
 @tailwind utilities;
 
 :root {
+  /* Color System */
   --color-primary: #EF3A33;
   --color-primary-dark: #D42F28;
+  --color-primary-soft: #E87570;
   --color-black: #1A1A1A;
   --color-charcoal: #2D2D2D;
   --color-white: #F7FAFC;
   --color-grey: #666666;
-  --color-gold: #C9A96E;
+  --color-gold: #E5C576;
+  --color-gold-light: #F0D999;
 
+  /* Typography System */
   --font-heading: 'Poppins', sans-serif;
   --font-body: 'Inter', sans-serif;
 
+  /* Spacing System */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 2rem;
   --spacing-lg: 4rem;
   --spacing-xl: 8rem;
 
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  /* Border Radius Design System - Main System */
+  --radius-main: 32px;          /* Primary cards, containers, hero elements */
+  --radius-button: 12px;         /* All buttons and interactive elements */
+  --radius-card: 32px;           /* Service cards, capability cards */
+  --radius-overlay: 32px;        /* Image overlays, modal containers */
+  --radius-cta: 32px;            /* CTA containers, call-to-action sections */
+  --radius-input: 12px;          /* Form inputs, text fields */
+  --radius-small: 8px;           /* Small elements, tags, badges */
 
+  /* Transition System */
   --transition-fast: 0.2s ease-out;
   --transition-medium: 0.4s ease-out;
   --transition-slow: 0.8s ease-out;
+
+  /* Card System - Ensures consistent aspect ratios */
+  --card-min-height: 280px;      /* Minimum height for all cards */
+  --card-padding: 2rem;          /* Standard card padding */
+  --card-gap: 1.5rem;            /* Gap between card grid items */
 }
 
 * {
@@ -174,20 +190,37 @@ a:focus-visible {
   outline-offset: 4px;
 }
 
-/* Utilities for section spacing */
+/* Utilities for section spacing - Standardized */
 .section-padding {
-  padding: 6rem 1rem;
+  padding: 5rem 1rem;
 }
 
 @media (min-width: 768px) {
   .section-padding {
-    padding: 8rem 2rem;
+    padding: 7rem 2rem;
   }
 }
 
 @media (min-width: 1024px) {
   .section-padding {
-    padding: 10rem 4rem;
+    padding: 8rem 4rem;
+  }
+}
+
+/* Consistent section spacing between elements */
+.section-spacing {
+  margin-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    margin-bottom: 5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    margin-bottom: 6rem;
   }
 }
 

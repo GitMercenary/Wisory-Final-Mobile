@@ -3,6 +3,7 @@ import { Preloader } from '@/components/common/Preloader';
 import { Hero } from '@/components/sections/Hero';
 import { WhatWeDo } from '@/components/sections/WhatWeDo';
 import { Services } from '@/components/sections/Services';
+import PinnedSectionWithBubble from '@/components/sections/PinnedSectionWithBubble';
 import { About } from '@/components/sections/About';
 import { Team } from '@/components/sections/Team';
 import { Recognition } from '@/components/sections/Recognition';
@@ -24,14 +25,15 @@ export default function Home() {
         <Hero />
       <WhatWeDo />
       <Services />
+      <PinnedSectionWithBubble />
       <About />
       {/* <Team /> */}
       {/* <Recognition /> */}
       {/* <MediaMentions /> */}
-      <Values />
+      {/* <Values /> */}
       {/* <CaseStudies /> */}
       <Process />
-      <Testimonials />
+      {/* <Testimonials /> */}
       <Blog />
       <CTA />
       <Footer />

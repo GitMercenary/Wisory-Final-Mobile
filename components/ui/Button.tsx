@@ -13,11 +13,12 @@ interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'ref'> {
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', children, magnetic = false, ...props }, ref) => {
-    const baseClasses = 'inline-flex items-center justify-center font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-md';
+    // Design System: Using rounded-button for all buttons (12px)
+    const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-fast focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-button';
 
     const variants = {
       primary: 'bg-primary text-white hover:bg-primary-dark shadow-lg hover:shadow-xl',
-      secondary: 'bg-charcoal text-white hover:bg-black',
+      secondary: 'bg-charcoal text-white hover:bg-black shadow-md hover:shadow-lg',
       outline: 'border-2 border-primary text-primary hover:bg-primary hover:text-white',
       ghost: 'text-black hover:bg-vapor',
     };
@@ -32,7 +33,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <motion.button
         ref={ref}
         className={cn(baseClasses, variants[variant], sizes[size], className)}
-        whileHover={{ scale: magnetic ? 1 : 1.05 }}
+        whileHover={{ scale: magnetic ? 1 : 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
         {...props}

@@ -8,9 +8,11 @@ import { Menu, X } from 'lucide-react';
 import { MagneticButton } from './MagneticButton';
 import { Button } from '../ui/Button';
 import { cn } from '@/lib/utils';
+import { LogoOutlineEffect } from '../animations/LogoOutlineEffect';
 
 const navLinks = [
   { name: 'Solutions', href: '#solutions' },
+  { name: 'Services', href: '/services', isExternal: true },
   { name: 'Capabilities', href: '#capabilities' },
   { name: 'Case Studies', href: '#case-studies' },
   { name: 'About', href: '#about' },
@@ -38,6 +40,14 @@ export const Navbar: React.FC = () => {
     }
   };
 
+  const handleNavClick = (link: { name: string; href: string; isExternal?: boolean }) => {
+    if (link.isExternal) {
+      window.location.href = link.href;
+    } else {
+      scrollToSection(link.href);
+    }
+  };
+
   return (
     <>
       <motion.nav
@@ -46,29 +56,49 @@ export const Navbar: React.FC = () => {
           isScrolled ? 'glass shadow-lg' : 'bg-transparent'
         )}
         initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+        animate={{
+          y: 0,
+          opacity: 1,
+          scale: isScrolled ? 0.95 : 1,
+          paddingTop: isScrolled ? '0.5rem' : '0rem',
+          paddingBottom: isScrolled ? '0.5rem' : '0rem'
+        }}
+        transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+        style={{ transformOrigin: 'top center' }}
       >
         <div className="container-custom">
-          <div className="flex items-center justify-between h-20">
+          <motion.div
+            className="flex items-center justify-between"
+            animate={{
+              height: isScrolled ? '60px' : '80px'
+            }}
+            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-3 group">
               <motion.div
-                className="w-12 h-12 relative"
                 whileHover={{ scale: 1.05, rotate: 5 }}
                 transition={{ duration: 0.3 }}
+                animate={{
+                  width: isScrolled ? 40 : 48,
+                  height: isScrolled ? 40 : 48
+                }}
               >
-                <Image
+                <LogoOutlineEffect
                   src="/logo.png"
                   alt="Wisory Global Logo"
-                  fill
-                  className="object-contain"
-                  priority
+                  size={isScrolled ? 40 : 48}
                 />
               </motion.div>
-              <span className="text-xl font-heading font-bold text-white hidden sm:block">
+              <motion.span
+                className="font-heading font-bold text-white hidden sm:block"
+                animate={{
+                  fontSize: isScrolled ? '1rem' : '1.25rem'
+                }}
+                transition={{ duration: 0.3 }}
+              >
                 WISORY GLOBAL
-              </span>
+              </motion.span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -77,11 +107,15 @@ export const Navbar: React.FC = () => {
                 <motion.div
                   key={link.name}
                   initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    fontSize: isScrolled ? '0.875rem' : '1rem'
+                  }}
                   transition={{ delay: index * 0.1 + 0.3 }}
                 >
                   <button
-                    onClick={() => scrollToSection(link.href)}
+                    onClick={() => handleNavClick(link)}
                     className="relative text-white hover:text-primary transition-colors duration-300 group"
                   >
                     {link.name}
@@ -95,12 +129,16 @@ export const Navbar: React.FC = () => {
             <div className="hidden lg:block">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
+                animate={{
+                  opacity: 1,
+                  scale: isScrolled ? 0.9 : 1
+                }}
                 transition={{ delay: 0.6 }}
               >
                 <MagneticButton strength={0.3} tolerance={2}>
                   <Button
                     variant="primary"
+                    size={isScrolled ? 'sm' : 'md'}
                     onClick={() => scrollToSection('#contact')}
                     className="relative overflow-hidden"
                   >
@@ -124,7 +162,7 @@ export const Navbar: React.FC = () => {
             >
               {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
-          </div>
+          </motion.div>
         </div>
       </motion.nav>
 
@@ -143,7 +181,7 @@ export const Navbar: React.FC = () => {
                 {navLinks.map((link, index) => (
                   <motion.button
                     key={link.name}
-                    onClick={() => scrollToSection(link.href)}
+                    onClick={() => handleNavClick(link)}
                     className="text-white text-3xl font-heading font-semibold hover:text-primary transition-colors"
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}

@@ -8,7 +8,7 @@ import { MagneticButton } from '../common/MagneticButton';
 
 export const CTA: React.FC = () => {
   return (
-    <section id="contact" className="relative section-padding bg-primary overflow-hidden">
+    <section id="contact" className="relative section-padding bg-primary-soft overflow-hidden">
       {/* Background Pattern with Animation */}
       <motion.div
         className="absolute inset-0 grid-pattern opacity-10"
@@ -67,7 +67,7 @@ export const CTA: React.FC = () => {
               high-performing, scalable capability center that drives innovation and growth.
             </p>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons - Design System Compliant */}
             <motion.div
               className="flex flex-col sm:flex-row items-center justify-center gap-6"
               initial={{ opacity: 0, y: 20 }}
@@ -79,7 +79,7 @@ export const CTA: React.FC = () => {
                 <Button
                   variant="secondary"
                   size="lg"
-                  className="bg-white text-primary hover:bg-vapor shadow-2xl min-w-[250px] group"
+                  className="bg-white text-primary hover:bg-vapor shadow-2xl min-w-[250px] group rounded-button"
                 >
                   <span className="mr-2">Schedule a Consultation</span>
                   <motion.div
@@ -95,7 +95,7 @@ export const CTA: React.FC = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-2 border-white text-white hover:bg-white hover:text-primary min-w-[250px]"
+                className="border-2 border-white text-white hover:bg-white hover:text-primary min-w-[250px] rounded-button"
               >
                 Download Our Brochure
               </Button>

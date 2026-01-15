@@ -81,27 +81,45 @@ export const Process: React.FC = () => {
           0
         );
 
-        // Animate steps
+        // Animate steps - Icons/Numbers FIRST, then text with delay
         steps.forEach((_, index) => {
-          const stepElement = `.process-step-${index}`;
+          const iconElement = `.process-icon-${index}`;
+          const textElement = `.process-text-${index}`;
           const startTime = index * 0.25;
           const duration = 0.2;
 
+          // Animate icon first
           masterTimeline.fromTo(
-            stepElement,
+            iconElement,
             {
               opacity: 0,
-              y: 80,
-              scale: 0.9,
+              scale: 0.5,
+              y: 40,
+            },
+            {
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              duration: duration,
+              ease: 'back.out(1.7)',
+            },
+            startTime
+          );
+
+          // Animate text after icon with slight delay
+          masterTimeline.fromTo(
+            textElement,
+            {
+              opacity: 0,
+              y: 30,
             },
             {
               opacity: 1,
               y: 0,
-              scale: 1,
               duration: duration,
               ease: 'power2.out',
             },
-            startTime
+            startTime + 0.15
           );
         });
       } else {
@@ -131,7 +149,7 @@ export const Process: React.FC = () => {
   }, []);
 
   return (
-    <section id="process" ref={sectionRef} className="min-h-screen bg-white relative overflow-hidden py-20">
+    <section id="process" ref={sectionRef} className="min-h-screen bg-white relative py-20">
       <div className="container-custom">
         {/* Section Header */}
         <div className="text-center mb-20">
@@ -162,29 +180,31 @@ export const Process: React.FC = () => {
             style={{ transformOrigin: 'left' }}
           />
 
-          <div className="grid grid-cols-4 gap-8 relative z-10">
+          <div className="grid grid-cols-4 gap-12 relative z-10">
             {steps.map((step, index) => (
               <div
                 key={step.number}
-                className={`process-step-${index} relative opacity-0`}
+                className="relative"
               >
-                {/* Icon Circle */}
-                <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 relative z-10 shadow-xl">
-                  <step.icon className="w-10 h-10 text-white" />
-                </div>
-
-                {/* Content */}
-                <div className="text-center">
-                  <span className="text-6xl font-heading font-bold text-primary/20 block mb-2">
+                {/* Icon Circle - Animates FIRST */}
+                <div className={`process-icon-${index} opacity-0`}>
+                  <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-8 relative z-10 shadow-xl">
+                    <step.icon className="w-10 h-10 text-white" />
+                  </div>
+                  <span className="text-6xl font-heading font-bold text-primary/20 block text-center mb-8">
                     {step.number}
                   </span>
+                </div>
+
+                {/* Content - Animates SECOND with delay */}
+                <div className={`process-text-${index} text-center opacity-0 mt-8`}>
                   <h3 className="text-xl font-heading font-bold text-black mb-3">
                     {step.title}
                   </h3>
                   <p className="text-grey mb-4 leading-relaxed text-sm min-h-[80px]">
                     {step.description}
                   </p>
-                  <span className="inline-block bg-vapor text-primary px-3 py-1 rounded-full text-sm font-medium">
+                  <span className="inline-block bg-vapor text-primary px-3 py-1 rounded-lg text-sm font-medium">
                     {step.duration}
                   </span>
                 </div>
@@ -195,40 +215,80 @@ export const Process: React.FC = () => {
 
         {/* Mobile/Tablet Stacking Cards */}
         <div className="lg:hidden">
-          {steps.map((step, index) => (
-            <div
-              key={step.number}
-              className="mobile-process-card sticky mb-8"
-              style={{ top: `${80 + index * 20}px`, zIndex: index + 1 }}
-            >
-              <div className="max-w-2xl mx-auto">
-                <div className="bg-vapor rounded-2xl p-6 md:p-8 shadow-lg border border-grey/10">
-                  {/* Icon and Number */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center">
-                      <step.icon className="w-8 h-8 text-white" />
-                    </div>
-                    <span className="text-6xl md:text-7xl font-heading font-bold text-primary/20">
-                      {step.number}
-                    </span>
-                  </div>
+          {steps.map((step, index) => {
+            const [isExpanded, setIsExpanded] = React.useState(false);
 
-                  {/* Content */}
-                  <div>
-                    <h3 className="text-2xl md:text-3xl font-heading font-bold text-black mb-3">
-                      {step.title}
-                    </h3>
-                    <p className="text-grey mb-4 leading-relaxed text-base md:text-lg">
-                      {step.description}
-                    </p>
-                    <span className="inline-block bg-white text-primary px-4 py-2 rounded-full text-sm font-medium shadow-sm">
-                      {step.duration}
-                    </span>
-                  </div>
+            return (
+              <motion.div
+                key={step.number}
+                className="mobile-process-card sticky mb-8"
+                style={{ top: `${80 + index * 20}px`, zIndex: index + 1 }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div className="max-w-2xl mx-auto">
+                  <motion.div
+                    className="bg-[#F5F1E8] rounded-2xl p-6 md:p-8 shadow-lg border border-grey/10 cursor-pointer"
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {/* Icon and Number */}
+                    <div className="flex items-center justify-between mb-6">
+                      <motion.div
+                        className="w-16 h-16 bg-primary rounded-full flex items-center justify-center"
+                        animate={{ scale: isExpanded ? 1.1 : 1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <step.icon className="w-8 h-8 text-white" />
+                      </motion.div>
+                      <span className="text-6xl md:text-7xl font-heading font-bold text-primary/20">
+                        {step.number}
+                      </span>
+                    </div>
+
+                    {/* Content */}
+                    <div>
+                      <h3 className="text-2xl md:text-3xl font-heading font-bold text-black mb-3">
+                        {step.title}
+                      </h3>
+                      <motion.p
+                        className="text-grey mb-4 leading-relaxed text-base md:text-lg"
+                        animate={{ opacity: 1 }}
+                      >
+                        {isExpanded ? step.hoverDescription : step.description}
+                      </motion.p>
+
+                      {/* Expanded Image */}
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{
+                          height: isExpanded ? 'auto' : 0,
+                          opacity: isExpanded ? 1 : 0,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden mb-4"
+                      >
+                        <img
+                          src={step.image}
+                          alt={step.title}
+                          className="w-full h-48 object-cover rounded-lg"
+                        />
+                      </motion.div>
+
+                      <span className="inline-block bg-white text-primary px-4 py-2 rounded-lg text-sm font-medium shadow-sm">
+                        {step.duration}
+                      </span>
+                      <span className="ml-3 text-sm text-grey">
+                        {isExpanded ? 'Tap to collapse' : 'Tap to expand'}
+                      </span>
+                    </div>
+                  </motion.div>
                 </div>
-              </div>
-            </div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
