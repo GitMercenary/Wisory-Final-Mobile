@@ -24,7 +24,7 @@ export default function Home() {
       <main className="min-h-screen">
         <Navbar />
         {/* <NewHero /> */}
-        {/*<Hero />*/}
+        <Hero />
       <WhatWeDo />
       {/* 1. <Services /> */}
       <PinnedSectionWithBubble />
