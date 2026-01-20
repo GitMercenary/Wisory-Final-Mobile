@@ -13,7 +13,7 @@ const heroContent = {
   overline: 'Finance & Automation',
   headline: 'Precision Finance. Intelligent Automation.',
   subtext: 'Transform your financial operations. We combine expert accounting teams with RPA (Robotic Process Automation) to streamline payables, receivables, and reporting—delivering 100% accuracy and real-time insights.',
-  backgroundImage: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=2000&q=80',
+  backgroundImage: '/service-finance-automation-hero.jpg',
 };
 
 // Key Offerings Data
@@ -22,25 +22,25 @@ const offerings: ServiceOffering[] = [
     icon: BookOpen,
     title: 'Accounting & Bookkeeping',
     description: 'Rigorous daily transaction management, reconciliation, and monthly closings ensuring your books are audit-ready at all times.',
-    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-finance-automation-1.jpg',
   },
   {
     icon: TrendingUp,
     title: 'Virtual CFO Services',
     description: 'Strategic financial planning, cash flow forecasting, and unit economics analysis to guide your expansion decisions without the overhead of a full-time CFO.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-finance-automation-2.jpg',
   },
   {
     icon: Cpu,
     title: 'Finance Process Automation',
     description: 'Implementing custom RPA bots for high-volume tasks like invoice processing and reconciliation to eliminate manual error and reduce costs.',
-    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-finance-automation-3.jpg',
   },
   {
     icon: BarChart3,
     title: 'MIS & Global Reporting',
     description: 'Custom-built, real-time financial dashboards that give your global HQ instant visibility into Indian operations.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-finance-automation-4.jpg',
   },
 ];
 

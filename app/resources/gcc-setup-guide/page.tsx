@@ -193,7 +193,7 @@ export default function GCCSetupGuidePage() {
       {/* 4. Guide Stats - Credibility Numbers */}
       <ServiceStats
         stats={guideStats}
-        backgroundColor="bg-black"
+        backgroundColor="bg-[#F5F1E8]"
         accentColor="text-primary"
       />
 

@@ -13,7 +13,7 @@ const heroContent = {
   overline: 'Governance & Vendor Management',
   headline: 'Uncompromising Governance. Seamless Operations.',
   subtext: 'We act as your local custodians, managing third-party ecosystems and ensuring every vendor interaction aligns strictly with your global operating standards.',
-  backgroundImage: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=2000&q=80',
+  backgroundImage: '/service-governance-hero.jpg',
 };
 
 // Key Offerings Data
@@ -22,25 +22,25 @@ const offerings: ServiceOffering[] = [
     icon: Handshake,
     title: 'Strategic Vendor Procurement',
     description: 'Sourcing and vetting best-in-class partners for transport, catering, and facility management through a transparent bidding process.',
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-governance-1.jpg',
   },
   {
     icon: FileSignature,
     title: 'Contract & SLA Management',
     description: 'Rigorous negotiation of Service Level Agreements (SLAs), regular performance reviews, and proactive renewal management.',
-    image: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-governance-2.jpg',
   },
   {
     icon: ClipboardCheck,
     title: 'Audit & Operational Assurance',
     description: 'Periodic operational audits to identify process gaps, prevent financial leakage, and ensure consistent service quality.',
-    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-governance-3.jpg',
   },
   {
     icon: ShieldAlert,
     title: 'Risk & Continuity Planning',
     description: 'Robust Business Continuity Planning (BCP) and disaster recovery protocols to insulate your operations from external disruptions.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-governance-4.jpg',
   },
 ];
 

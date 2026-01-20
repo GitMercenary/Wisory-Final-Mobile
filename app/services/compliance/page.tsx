@@ -13,7 +13,7 @@ const heroContent = {
   overline: 'Licensing, Compliance & Quality',
   headline: "Navigate India's Regulatory Landscape with Confidence.",
   subtext: 'We de-risk your market entry. From establishing your legal entity to managing ongoing statutory filings, we ensure your operations remain 100% compliant with local and international laws.',
-  backgroundImage: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2000&q=80',
+  backgroundImage: '/service-compliance-hero.jpg',
 };
 
 // Key Offerings Data
@@ -22,25 +22,25 @@ const offerings: ServiceOffering[] = [
     icon: Building2,
     title: 'Business Incorporation & SEZ',
     description: 'End-to-end management of Pvt Ltd / LLP registration, SEZ unit approvals, and STPI registrations for rapid operational commencement.',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-compliance-1.jpg',
   },
   {
     icon: FileText,
     title: 'Financial & Tax Compliance',
     description: 'Comprehensive handling of GST, TDS, corporate tax filings, and transfer pricing audits to ensure financial integrity.',
-    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-compliance-2.jpg',
   },
   {
     icon: Scale,
     title: 'Labor Law Adherence',
     description: 'Strict compliance with PF, ESI, Professional Tax, and the Shops & Establishment Act to protect your workforce and reputation.',
-    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-compliance-3.jpg',
   },
   {
     icon: Award,
     title: 'Quality & Certifications',
     description: 'Strategic advisory and implementation support for ISO 9001, ISO 27001, and CMMI appraisals to meet global standards.',
-    image: 'https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-compliance-4.jpg',
   },
 ];
 

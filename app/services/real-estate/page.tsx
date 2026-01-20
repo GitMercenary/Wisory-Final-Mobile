@@ -13,7 +13,7 @@ const heroContent = {
   overline: 'Real Estate & Infrastructure',
   headline: 'Infrastructure That Accelerates Innovation.',
   subtext: "We don't just find offices; we build ecosystems. From Grade-A tech parks in Bengaluru to SEZ zones in Hyderabad, we execute end-to-end site selection, lease negotiation, and fit-outs tailored for global enterprises.",
-  backgroundImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=80',
+  backgroundImage: '/service-real-estate-hero.jpg',
 };
 
 // Key Offerings Data
@@ -22,25 +22,25 @@ const offerings: ServiceOffering[] = [
     icon: MapPin,
     title: 'Strategic Site Selection',
     description: "Data-driven location analysis prioritizing talent density, connectivity, and cost-efficiency across India's top tier-1 cities.",
-    image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-real-estate-1.jpg',
   },
   {
     icon: PenTool,
     title: 'Design & Build',
     description: 'Turnkey interior solutions that translate your global brand identity into high-performance local workspaces.',
-    image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-real-estate-3.jpg',
   },
   {
     icon: Settings,
     title: 'Integrated Facility Management',
     description: 'Comprehensive 24/7 operations including security, maintenance, and employee experience management.',
-    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-real-estate-2.jpg',
   },
   {
     icon: Leaf,
     title: 'ESG & Sustainability',
     description: 'Future-ready workspaces featuring LEED-certified green building options to align with your global carbon footprint goals.',
-    image: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-real-estate-4.jpg',
   },
 ];
 

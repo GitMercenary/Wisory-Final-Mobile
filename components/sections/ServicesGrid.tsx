@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -199,10 +200,12 @@ export const ServicesGrid: React.FC = () => {
                   
                   {/* Left: Image */}
                   <div className="relative h-full bg-gray-900">
-                    <img 
-                      src={service.image} 
-                      alt={service.title} 
-                      className="w-full h-full object-cover opacity-80" 
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      className="object-cover opacity-80"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-black/30" />
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -267,7 +270,13 @@ export const ServicesGrid: React.FC = () => {
                 className="bg-white rounded-2xl overflow-hidden shadow-xl block transition-transform hover:scale-[1.02] cursor-pointer"
               >
                 <div className="h-48 overflow-hidden relative">
-                  <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                   <div className="absolute inset-0 bg-black/30" />
                   <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20">

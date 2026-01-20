@@ -13,7 +13,7 @@ const heroContent = {
   overline: 'Human Resources & Talent Management',
   headline: 'Access World-Class Talent at Scale.',
   subtext: "Accelerate your innovation roadmap by tapping into India's deep technical talent pool. We handle everything from niche recruitment and payroll to full employee lifecycle management, allowing you to focus on growth.",
-  backgroundImage: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=80',
+  backgroundImage: '/service-hr-talent-hero.jpg',
 };
 
 // Key Offerings Data
@@ -22,25 +22,25 @@ const offerings: ServiceOffering[] = [
     icon: Users,
     title: 'Specialized Talent Acquisition',
     description: 'Targeted hiring strategies for high-demand roles in AI, Cloud Engineering, and Global Finance.',
-    image: 'https://images.unsplash.com/photo-1560439514-4e9645039924?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-hr-talent-1.jpg',
   },
   {
     icon: FileCheck,
     title: 'Employer of Record (EOR)',
     description: 'Rapidly onboard teams without setting up a local legal entity. We handle liability, contracts, and compliance.',
-    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-compliance-hero.jpg',
   },
   {
     icon: Calculator,
     title: 'Global Payroll & Benefits',
     description: 'Seamless salary processing, tax compliance, and comprehensive benefits management aligned with local labor laws.',
-    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-finance-automation-1.jpg',
   },
   {
     icon: Plane,
     title: 'Expat Mobility & Relocation',
     description: 'End-to-end visa assistance, housing support, and cultural integration for your global leadership teams.',
-    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1600&q=80',
+    image: '/service-hr-talent-2.jpg',
   },
 ];
 
