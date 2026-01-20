@@ -74,7 +74,7 @@ export const ServicesGrid: React.FC = () => {
   useGSAP(() => {
     if (!containerRef.current) return;
 
-    const cards = cardsRef.current.filter(Boolean);
+    const cards = cardsRef.current.filter((card): card is HTMLDivElement => card !== null);
     const mm = gsap.matchMedia();
 
     // --- DESKTOP LOGIC (Pinned Stack) ---
@@ -127,7 +127,7 @@ export const ServicesGrid: React.FC = () => {
 
     // --- MOBILE LOGIC ---
     mm.add("(max-width: 1023px)", () => {
-        const mobileCards = mobileCardsRef.current.filter(Boolean);
+        const mobileCards = mobileCardsRef.current.filter((card): card is HTMLDivElement => card !== null);
 
         mobileCards.forEach((card, index) => {
             const textElements = card.querySelectorAll('.mobile-reveal-text');

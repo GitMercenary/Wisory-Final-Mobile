@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, Variants } from 'framer-motion';
 import { ChevronDown, ArrowRight, TrendingUp, Users } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { MagneticButton } from '../common/MagneticButton';
@@ -12,9 +12,15 @@ export const Hero: React.FC = () => {
   const y = useTransform(scrollY, [0, 500], [0, 150]);
 
   // Animation variants
-  const fadeInUp = {
+  const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6
+      }
+    }
   };
 
   return (

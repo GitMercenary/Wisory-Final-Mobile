@@ -64,7 +64,7 @@ export const About: React.FC = () => {
   useGSAP(() => {
     if (!containerRef.current) return;
 
-    const cards = cardsRef.current.filter(Boolean);
+    const cards = cardsRef.current.filter((card): card is HTMLDivElement => card !== null);
     const mm = gsap.matchMedia();
 
     // --- DESKTOP LOGIC (Animation - UNCHANGED) ---
@@ -116,7 +116,7 @@ export const About: React.FC = () => {
 
     // --- MOBILE LOGIC (With Blur Manipulation & Delay) ---
     mm.add("(max-width: 1023px)", () => {
-        const mobileCards = mobileCardsRef.current.filter(Boolean);
+        const mobileCards = mobileCardsRef.current.filter((card): card is HTMLDivElement => card !== null);
 
         // Updated to include 'index' to target the 2nd card
         mobileCards.forEach((card, index) => {

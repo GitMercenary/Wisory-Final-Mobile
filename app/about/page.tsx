@@ -168,7 +168,9 @@ export default function AboutPage() {
         backgroundImage={heroContent.backgroundImage}
         primaryCTA={{
           text: 'Get in Touch',
-          href: '/contact'
+          onClick: () => {
+            window.location.href = '/contact';
+          }
         }}
         secondaryCTA={{
           text: 'Our Services',
