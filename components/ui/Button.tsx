@@ -13,8 +13,8 @@ interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'ref'> {
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', children, magnetic = false, ...props }, ref) => {
-    // Design System: Using rounded-button for all buttons (12px)
-    const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-fast focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-button';
+    // Design System: Using rounded-lg for all buttons (matching footer subscribe style)
+    const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-fast focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-lg';
 
     const variants = {
       primary: 'bg-primary text-white hover:bg-primary-dark shadow-lg hover:shadow-xl',

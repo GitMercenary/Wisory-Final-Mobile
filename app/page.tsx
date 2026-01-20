@@ -1,6 +1,7 @@
 import { Navbar } from '@/components/common/Navbar';
 import { Preloader } from '@/components/common/Preloader';
 import { Hero } from '@/components/sections/Hero';
+{ /*import { Hero as NewHero} from '@/components/sections/hero1'; */}
 import { WhatWeDo } from '@/components/sections/WhatWeDo';
 import { Services } from '@/components/sections/Services';
 import PinnedSectionWithBubble from '@/components/sections/PinnedSectionWithBubble';
@@ -22,20 +23,21 @@ export default function Home() {
       <Preloader />
       <main className="min-h-screen">
         <Navbar />
+        {/* <NewHero /> */}
         <Hero />
       <WhatWeDo />
-      <Services />
+      {/* 1. <Services /> */}
       <PinnedSectionWithBubble />
       <About />
       {/* <Team /> */}
       {/* <Recognition /> */}
       {/* <MediaMentions /> */}
-      {/* <Values /> */}
+      <Values /> 
       {/* <CaseStudies /> */}
-      <Process />
+      <Process /> 
       {/* <Testimonials /> */}
       <Blog />
-      <CTA />
+      {/* <CTA /> */}
       <Footer />
       </main>
     </>

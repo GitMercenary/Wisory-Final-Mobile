@@ -1,50 +1,79 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { AnimatedText } from '../common/AnimatedText';
 import { Button } from '../ui/Button';
 import { MagneticButton } from '../common/MagneticButton';
-import { ParticleBackground } from '../3d/ParticleBackground';
-import { FloatingShapes } from '../3d/FloatingShapes';
-import { CityConnectionAnimation } from '../animations/CityConnectionAnimation';
 
-export const Hero: React.FC = () => {
+interface ServiceHeroProps {
+  overline?: string;
+  headline: string;
+  subtext: string;
+  backgroundImage: string;
+  primaryCTA?: {
+    text: string;
+    onClick?: () => void;
+  };
+  secondaryCTA?: {
+    text: string;
+    onClick?: () => void;
+  };
+  scrollToId?: string;
+}
+
+export const ServiceHero: React.FC<ServiceHeroProps> = ({
+  overline = 'Our Services',
+  headline,
+  subtext,
+  backgroundImage,
+  primaryCTA = { text: 'Request a Briefing' },
+  secondaryCTA = { text: 'View Offerings' },
+  scrollToId = 'offerings',
+}) => {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   const scrollToNext = () => {
-    const nextSection = document.querySelector('#solutions');
+    const nextSection = document.querySelector(`#${scrollToId}`);
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
+  const handlePrimaryCTA = () => {
+    if (primaryCTA.onClick) {
+      primaryCTA.onClick();
+    } else {
+      const contact = document.querySelector('#contact');
+      if (contact) contact.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleSecondaryCTA = () => {
+    if (secondaryCTA.onClick) {
+      secondaryCTA.onClick();
+    } else {
+      scrollToNext();
+    }
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark-gradient">
-      {/* Background Image with gradient overlay for better blending */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+      {/* Background Image with gradient overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url(/hero-bg.png)',
+          backgroundImage: `url(${backgroundImage})`,
         }}
       />
       {/* Dark Overlay with gradient for smooth scroll transition */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/30" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/50" />
 
       {/* Grid Pattern */}
-      <div className="absolute inset-0 grid-pattern opacity-20" />
-
-      {/* City Connection Vector Animation */}
-      <CityConnectionAnimation />
-
-      {/* 3D Background Elements */}
-      <Suspense fallback={null}>
-        <FloatingShapes />
-        <ParticleBackground />
-      </Suspense>
+      <div className="absolute inset-0 grid-pattern opacity-10" />
 
       {/* Content */}
       <motion.div
@@ -58,23 +87,22 @@ export const Hero: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Strategic Consulting
+          {overline}
         </motion.p>
 
         {/* Main Headline */}
-        <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-h1 font-heading font-extrabold text-white mb-6">
-          <AnimatedText text="Think Wise. Act Global." type="word" delay={0.4} />
+        <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-extrabold text-white mb-6">
+          <AnimatedText text={headline} type="word" delay={0.4} />
         </h1>
 
         {/* Subheadline */}
         <motion.p
-          className="text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto mb-12"
+          className="text-lg md:text-xl lg:text-2xl text-gray-200 max-w-4xl mx-auto mb-12 leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.2 }}
         >
-          We unlock India&apos;s potential to power global enterprise innovation
-          by building capability centers that scale ideas into outcomes.
+          {subtext}
         </motion.p>
 
         {/* CTA Buttons */}
@@ -88,26 +116,20 @@ export const Hero: React.FC = () => {
             <Button
               variant="primary"
               size="lg"
-              onClick={() => {
-                const contact = document.querySelector('#contact');
-                if (contact) contact.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={handlePrimaryCTA}
               className="shadow-2xl min-w-[200px]"
             >
-              Request a Briefing
+              {primaryCTA.text}
             </Button>
           </MagneticButton>
 
           <Button
             variant="outline"
             size="lg"
-            onClick={() => {
-              const solutions = document.querySelector('#solutions');
-              if (solutions) solutions.scrollIntoView({ behavior: 'smooth' });
-            }}
+            onClick={handleSecondaryCTA}
             className="min-w-[200px] border-white text-white hover:bg-white hover:text-black"
           >
-            Our Solutions
+            {secondaryCTA.text}
           </Button>
         </motion.div>
 
@@ -132,7 +154,7 @@ export const Hero: React.FC = () => {
       </motion.div>
 
       {/* Bottom Gradient Fade for smooth scroll transition */}
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-white via-vapor/80 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
     </section>
   );
 };

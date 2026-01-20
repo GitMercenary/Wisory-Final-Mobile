@@ -2,41 +2,31 @@
 
 import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Target, Lightbulb, Rocket, LifeBuoy, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, LucideIcon } from 'lucide-react';
 
-const capabilities = [
-  {
-    number: '1',
-    icon: Target,
-    title: 'Strategic Planning',
-    description: 'We help you define the vision, scope, and roadmap for your India capability center aligned with global business objectives. Market entry strategy, Location selection, Business case development, Governance framework design.',
-  },
-  {
-    number: '2',
-    icon: Lightbulb,
-    title: 'Setup & Launch',
-    description: 'End-to-end execution support from legal entity formation to operational launch within 90 days. Entity registration, office infrastructure, Technology setup, Initial team recruitment.',
-  },
-  {
-    number: '3',
-    icon: Rocket,
-    title: 'Scale & Optimize',
-    description: 'Accelerate growth while maintaining quality through proven methodologies and best practices. Talent pipeline development, Process optimization, Performance metrics, Culture building.',
-  },
-  {
-    number: '4',
-    icon: LifeBuoy,
-    title: 'Ongoing Support',
-    description: 'Continuous advisory and operational support to ensure sustained success and competitive advantage. Strategic advisory, Compliance management, Change management, Innovation programs.',
-  },
-];
+export interface ServiceOffering {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  image?: string;
+}
 
-// --- ANIMATION VARIANTS (The "Smooth" Logic) ---
+interface ServiceOfferingsProps {
+  sectionLabel?: string;
+  headline: string;
+  subheadline?: string;
+  offerings: ServiceOffering[];
+  ctaText?: string;
+  ctaSubtext?: string;
+  onCtaClick?: () => void;
+}
+
+// Animation variants for mobile slider
 const variants = {
   enter: (direction: number) => ({
-    x: direction > 0 ? 300 : -300, // If going next, enter from right. If prev, enter from left.
+    x: direction > 0 ? 300 : -300,
     opacity: 0,
-    scale: 0.95, // Start slightly smaller
+    scale: 0.95,
   }),
   center: {
     zIndex: 1,
@@ -46,20 +36,20 @@ const variants = {
   },
   exit: (direction: number) => ({
     zIndex: 0,
-    x: direction < 0 ? 300 : -300, // If going next, exit to left.
+    x: direction < 0 ? 300 : -300,
     opacity: 0,
     scale: 0.95,
   }),
 };
 
-// --- SWIPE HELPERS ---
+// Swipe helpers
 const swipeConfidenceThreshold = 10000;
 const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-// --- SPOTLIGHT CARD WRAPPER ---
-const SpotlightCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
+// Spotlight Card Wrapper
+const SpotlightCard = ({ children, className = "", image }: { children: React.ReactNode; className?: string; image?: string }) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -80,6 +70,13 @@ const SpotlightCard = ({ children, className = "" }: { children: React.ReactNode
       onMouseLeave={() => setIsFocused(false)}
       className={`relative overflow-hidden group ${className}`}
     >
+      {/* Background Image (if provided) */}
+      {image && (
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity duration-500"
+          style={{ backgroundImage: `url(${image})` }}
+        />
+      )}
       <div
         className="pointer-events-none absolute -inset-px transition duration-300"
         style={{
@@ -92,21 +89,35 @@ const SpotlightCard = ({ children, className = "" }: { children: React.ReactNode
   );
 };
 
-export const WhatWeDo: React.FC = () => {
-  // We track both the index and the direction (-1 for prev, 1 for next)
+export const ServiceOfferings: React.FC<ServiceOfferingsProps> = ({
+  sectionLabel = 'What We Offer',
+  headline,
+  subheadline,
+  offerings,
+  ctaText = 'Schedule a Consultation',
+  ctaSubtext = 'Ready to transform your India strategy into measurable outcomes?',
+  onCtaClick,
+}) => {
   const [[page, direction], setPage] = useState([0, 0]);
-
-  // We wrap the index so it loops (0 -> 1 -> 2 -> 3 -> 0)
-  const currentIndex = ((page % capabilities.length) + capabilities.length) % capabilities.length;
+  const currentIndex = ((page % offerings.length) + offerings.length) % offerings.length;
 
   const paginate = (newDirection: number) => {
     setPage([page + newDirection, newDirection]);
   };
 
+  const handleCtaClick = () => {
+    if (onCtaClick) {
+      onCtaClick();
+    } else {
+      const contact = document.querySelector('#contact');
+      if (contact) contact.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section className="py-8 lg:py-24 bg-white overflow-hidden">
+    <section id="offerings" className="py-8 lg:py-24 bg-white overflow-hidden">
       <div className="container-custom h-full flex flex-col">
-        
+
         {/* Section Header */}
         <div className="text-center mb-6 md:mb-8 flex-shrink-0">
           <motion.p
@@ -115,32 +126,30 @@ export const WhatWeDo: React.FC = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            What We Do
+            {sectionLabel}
           </motion.p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-black mb-3 md:mb-4">
-            Comprehensive GCC Solutions
+            {headline}
           </h2>
-          <p className="text-sm md:text-base text-grey max-w-3xl mx-auto px-2">
-            From initial strategy to operational excellence, we provide end-to-end solutions
-            to establish and scale your India capability center.
-          </p>
+          {subheadline && (
+            <p className="text-sm md:text-base text-grey max-w-3xl mx-auto px-2">
+              {subheadline}
+            </p>
+          )}
         </div>
 
-        {/* --- MOBILE VIEW: SLIDER (Visible on small screens, Hidden on md+) --- */}
-        {/* CHANGE HEIGHT HERE: 
-            Adjust 'h-[380px]' below to change the mobile card height. 
-        */}
-        <div className="md:hidden relative w-full h-[380px] flex items-center justify-center">
+        {/* Mobile View: Slider */}
+        <div className="md:hidden relative w-full h-[420px] flex items-center justify-center">
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
             <motion.div
-              key={page} // Key change triggers animation
+              key={page}
               custom={direction}
               variants={variants}
               initial="enter"
               animate="center"
               exit="exit"
               transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 }, // Snappy spring physics
+                x: { type: "spring", stiffness: 300, damping: 30 },
                 opacity: { duration: 0.2 }
               }}
               drag="x"
@@ -149,32 +158,33 @@ export const WhatWeDo: React.FC = () => {
               onDragEnd={(e, { offset, velocity }) => {
                 const swipe = swipePower(offset.x, velocity.x);
                 if (swipe < -swipeConfidenceThreshold) {
-                  paginate(1); // Swipe Left -> Next
+                  paginate(1);
                 } else if (swipe > swipeConfidenceThreshold) {
-                  paginate(-1); // Swipe Right -> Prev
+                  paginate(-1);
                 }
               }}
               className="absolute w-full h-full cursor-grab active:cursor-grabbing"
             >
               <SpotlightCard
                 className="bg-[#F5F1E8] rounded-[40px] border border-grey/10 h-full flex flex-col relative shadow-sm"
+                image={offerings[currentIndex].image}
               >
-                {/* NAVIGATION BUTTONS (Top Right) */}
+                {/* Navigation Buttons */}
                 <div className="absolute top-6 right-6 flex items-center gap-2 z-20">
-                  <button 
-                    onClick={() => paginate(-1)} 
+                  <button
+                    onClick={() => paginate(-1)}
                     className="p-2 bg-white/50 hover:bg-white rounded-full transition-colors text-black"
                     aria-label="Previous"
                   >
                     <ChevronLeft size={16} />
                   </button>
-                  
+
                   <span className="font-heading font-medium text-sm text-black tracking-widest min-w-[50px] text-center">
-                    0{currentIndex + 1} / 0{capabilities.length}
+                    0{currentIndex + 1} / 0{offerings.length}
                   </span>
 
-                  <button 
-                    onClick={() => paginate(1)} 
+                  <button
+                    onClick={() => paginate(1)}
                     className="p-2 bg-white/50 hover:bg-white rounded-full transition-colors text-black"
                     aria-label="Next"
                   >
@@ -185,22 +195,22 @@ export const WhatWeDo: React.FC = () => {
                 <div className="p-8 py-10 flex flex-col h-full justify-between">
                   {/* Icon */}
                   <div className="mb-5 flex items-center justify-start h-12">
-                    {React.createElement(capabilities[currentIndex].icon, { 
-                      className: "w-12 h-12 text-primary", 
-                      strokeWidth: 1.5 
+                    {React.createElement(offerings[currentIndex].icon, {
+                      className: "w-12 h-12 text-primary",
+                      strokeWidth: 1.5
                     })}
                   </div>
 
                   {/* Title */}
-                  <div className="mb-4 min-h-[64px] flex items-start pr-16"> 
+                  <div className="mb-4 min-h-[64px] flex items-start pr-16">
                     <h3 className="text-2xl font-heading font-bold text-black leading-tight">
-                      {capabilities[currentIndex].title}
+                      {offerings[currentIndex].title}
                     </h3>
                   </div>
 
                   {/* Description */}
                   <p className="text-grey text-sm leading-relaxed flex-grow">
-                    {capabilities[currentIndex].description}
+                    {offerings[currentIndex].description}
                   </p>
                 </div>
               </SpotlightCard>
@@ -208,25 +218,25 @@ export const WhatWeDo: React.FC = () => {
           </AnimatePresence>
         </div>
 
-        {/* --- DESKTOP VIEW: GRID (Hidden on mobile, Visible on md+) --- */}
-        {/* NO CHANGES MADE HERE */}
+        {/* Desktop View: Grid */}
         <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-4">
-          {capabilities.map((capability) => (
+          {offerings.map((offering) => (
             <SpotlightCard
-              key={capability.title}
+              key={offering.title}
               className="bg-[#F5F1E8] rounded-[40px] border border-grey/10 hover:shadow-xl transition-all duration-medium flex flex-col"
+              image={offering.image}
             >
               <div className="p-8 md:p-8 py-10 flex flex-col h-full justify-between">
                 <div className="mb-5 flex items-center justify-start h-12">
-                  <capability.icon className="w-12 h-12 text-primary" strokeWidth={1.5} />
+                  <offering.icon className="w-12 h-12 text-primary" strokeWidth={1.5} />
                 </div>
                 <div className="mb-4 min-h-[64px] flex items-start">
                   <h3 className="text-2xl font-heading font-bold text-black leading-tight">
-                    {capability.title}
+                    {offering.title}
                   </h3>
                 </div>
                 <p className="text-grey text-sm leading-relaxed flex-grow">
-                  {capability.description}
+                  {offering.description}
                 </p>
               </div>
             </SpotlightCard>
@@ -235,21 +245,22 @@ export const WhatWeDo: React.FC = () => {
 
         {/* CTA Container */}
         <motion.div
-          className="text-center mt-0 md:mt-16 mx-auto max-w-2xl"
+          className="text-center mt-8 md:mt-16 mx-auto max-w-2xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px 0px -100px 0px", amount: 0.2 }}
           transition={{ delay: 0.2, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           <p className="text-grey mb-6 md:mb-8 text-base md:text-lg font-medium">
-            Ready to transform your India strategy into measurable outcomes?
+            {ctaSubtext}
           </p>
           <motion.button
-            className="bg-primary text-white px-8 py-4 rounded-lg font-semibold text-base hover:bg-primary-dark transition-colors duration-fast shadow-lg hover:shadow-xl"
+            className="bg-primary text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-primary-dark transition-colors duration-fast shadow-lg hover:shadow-xl"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            onClick={handleCtaClick}
           >
-            Schedule a Consultation
+            {ctaText}
           </motion.button>
         </motion.div>
       </div>
